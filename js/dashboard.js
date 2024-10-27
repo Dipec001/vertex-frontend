@@ -1,0 +1,1 @@
+// JavaScript file for handling dashboard logic (invite employees, view employees)
