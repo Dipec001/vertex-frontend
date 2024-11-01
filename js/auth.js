@@ -1,7 +1,7 @@
 // JavaScript file for login, sign up, and authentication
 'use strict';
 
-const apiUrl = 'http://127.0.0.1:8000';
+const apiUrl = 'http://127.0.0.1:8000/api/';
 
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
@@ -11,24 +11,21 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Switch to signup form
     switchToSignup.addEventListener('click', () => {
-      loginForm.classList.remove('active');
-      signupForm.classList.add('active');
-      signupForm.classList.add('hidden');
-      loginForm.classList.remove('hidden');
+      signupForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
     });
   
     // Switch to login form
     switchToLogin.addEventListener('click', () => {
-      signupForm.classList.remove('active');
-      loginForm.classList.add('active');
-      loginForm.style.display = 'block';
-      signupForm.style.display = 'none';
+      signupForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
     });
 });
 
 
 // Select the sign-up form
 const signupForm = document.getElementById('signup-form');
+const loginForm = document.getElementById('login-form');
 
 // Add event listener for form submission
 signupForm.addEventListener('submit', async (e) => {
@@ -86,4 +83,89 @@ signupForm.addEventListener('submit', async (e) => {
       alert('Something went wrong. Please try again.');
     }
   });
+
+
+async function loginUser(email, password) {
+    const response = await fetch(`${apiUrl}login/`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    return response.json(); // This should return the tokens
+}
+function storeTokens(tokens) {
+    localStorage.setItem('accessToken', tokens.accessToken);
+    localStorage.setItem('refreshToken', tokens.refreshToken);
+    console.log(tokens.accessToken);
+  }
+  
+  
+
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+  
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+  
+    try {
+      const tokens = await loginUser(email, password);
+      storeTokens(tokens);
+      alert('Login successful!');
+  
+      // Redirect or update UI
+      window.location.href = '/dashboard.html'; // Example redirect after login
+    } catch (error) {
+      alert('Login failed: ' + error.message);
+    }
+  });
+
+
+async function refreshToken() {
+    const refreshToken = localStorage.getItem('refreshToken');
+  
+    const response = await fetch(`${apiUrl}refresh/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ refreshToken })
+    });
+  
+    if (!response.ok) {
+      // If refresh token is also invalid, redirect to login
+      window.location.href = '/login.html';
+      throw new Error('Failed to refresh token');
+    }
+  
+    const tokens = await response.json();
+    storeTokens(tokens);
+    return tokens.accessToken;
+  }
+  
+
+async function fetchWithAuth(url, options = {}) {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!options.headers) {
+        options.headers = {};
+    }
+    options.headers.Authorization = `Bearer ${accessToken}`;
+
+    let response = await fetch(url, options);
+
+    if (response.status === 401) { // Token expired
+        const newAccessToken = await refreshToken();
+        options.headers.Authorization = `Bearer ${newAccessToken}`;
+        response = await fetch(url, options);
+    }
+
+    return response;
+}
+
   
