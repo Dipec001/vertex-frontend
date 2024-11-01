@@ -754,9 +754,9 @@ button {
     margin-top: 15px;
   }
   .auth-back-to-home {
-    top: 20%
+    top: 20px;
   }
   .auth-logo {
-    top: 20%;
+    top: 20px;
   }
 }
