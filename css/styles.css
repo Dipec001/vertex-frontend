@@ -250,6 +250,14 @@ button {
   font-size: 1.4em;
 }
 /* features media query */
+@media (max-width: 600px) {
+  .glass-box {
+    padding: 20px;
+  }
+  .hero-content h1{
+    font-size: 2em;
+  }
+}
 @media (max-width: 800px) {
   .download {
     grid-template-columns: auto;
