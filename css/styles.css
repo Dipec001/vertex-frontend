@@ -665,6 +665,7 @@ button {
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
+  color: var(--color-tertiary);
 }
 .signup-passwords {
   display: flex;
@@ -751,5 +752,11 @@ button {
   .left-side {
     height: 300px;
     margin-top: 15px;
+  }
+  .auth-back-to-home {
+    top: 20%
+  }
+  .auth-logo {
+    top: 20%;
   }
 }
