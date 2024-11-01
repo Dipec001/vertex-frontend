@@ -617,7 +617,7 @@ button {
   font-size: 18px;
   position: absolute;
   bottom: 30px;
-  right: 160px;
+  /* right: 160px; */
   color: var(--color-primary);
 }
 .auth-form {
@@ -746,9 +746,9 @@ button {
 
 }
 @media (max-width: 510px) {
-  .auth-p {
+  /* .auth-p {
     right: 60px;
-  }
+  } */
   .left-side {
     height: 300px;
     margin-top: 15px;
