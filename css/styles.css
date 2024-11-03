@@ -3,7 +3,7 @@
     --color-secondary: #e2ff32;             /* Secondary color */
     --color-tertiary: #121212;              /* Tertiary color */
     --color-primary-darker: #73867c;        /* Darker version of primary */
-    --gradient-primary: linear-gradient(to top left, #39b385, #9be15d); /* Gradient */
+    --gradient-primary: linear-gradient(to right, #e2ff32, #73867c); /* Gradient */
 }
 
 /* Prevent scrolling */
@@ -30,6 +30,18 @@ button {
     padding: 0;
     box-sizing: inherit;
 }
+input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+@media (max-width: 576px) {
+  input {
+      max-width: 90vw; /* Adjust to prevent cutting off on small screens */
+  }
+}
+
 
 /* Set the header to be positioned at the top and overlay the hero section */
 .header {
@@ -617,8 +629,8 @@ button {
   font-size: 18px;
   position: absolute;
   bottom: 30px;
-  /* right: 160px; */
   color: var(--color-primary);
+  font-weight: 600;
 }
 .auth-form {
   padding: 100px;
@@ -758,5 +770,96 @@ button {
   }
   .auth-logo {
     top: 20px;
+  }
+}
+
+/* Dashboard styles */
+.dashboard-sidebar {
+  background-color: var(--color-secondary);
+  color: var(--color-tertiary);
+  width: 250px; /* Expanded width */
+  transition: width 0.3s;
+  position: fixed;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+  flex: 1;
+  margin-left: 250px; /* Match expanded sidebar */
+  transition: margin-left 0.3s;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+}
+.icon {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.icon img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.icon::after {
+  content: attr(data-label);
+}
+.dashboard-logo {
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.dashboard-hero {
+  display: flex;
+  margin: 50px 10px 40px;
+  align-items: center;
+
+}
+.hamburger {
+  display: none;
+}
+.dashboard-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.profile-right {
+  display: flex;
+  gap: 10px; /* Add space between the icons */
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .icon::after {
+      content: attr(data-label);
+  }
+}
+
+@media (max-width: 768px) {
+  .icon::after {
+      content: '';
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+      display: none;
+  }
+
+  .hamburger {
+      display: block;
+      cursor: pointer;
   }
 }

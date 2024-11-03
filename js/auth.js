@@ -30,7 +30,7 @@ const loginForm = document.getElementById('login-form');
 // Add event listener for form submission
 signupForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-  
+
     // Get the values from the form inputs
     const email = document.getElementById('signup-email').value;
     const companyName = document.getElementById('signup-company').value;
@@ -53,7 +53,7 @@ signupForm.addEventListener('submit', async (e) => {
   
     try {
       // Send POST request to your API endpoint
-      const response = await fetch(`${apiUrl}/api/signup-company-owner/`, {
+      const response = await fetch(`${apiUrl}signup-company-owner/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Send the request as JSON
@@ -68,7 +68,7 @@ signupForm.addEventListener('submit', async (e) => {
         // If registration is successful
         alert('Registration successful! Redirecting to login...');
         // Optionally redirect the user to the login page or another page
-        window.location.href = 'index.html';
+        window.location.href = '/pages/dashboard.html';
       } else {
         // If there was an error, handle and display the specific errors
         let errorMessages = '';
@@ -85,26 +85,28 @@ signupForm.addEventListener('submit', async (e) => {
   });
 
 
-async function loginUser(email, password) {
+async function loginUser(username, password) {
     const response = await fetch(`${apiUrl}login/`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        
+        body: JSON.stringify({ username, password })
     });
+    const result = await response.json(); // Parse the JSON response from the server
+    console.log(result);
 
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`${result.errors['detail']}`);
     }
-
-    return response.json(); // This should return the tokens
+    return result; // This should return the tokens
 }
 function storeTokens(tokens) {
     localStorage.setItem('accessToken', tokens.accessToken);
     localStorage.setItem('refreshToken', tokens.refreshToken);
     console.log(tokens.accessToken);
-  }
+}
   
   
 
@@ -113,6 +115,7 @@ loginForm.addEventListener('submit', async (event) => {
   
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
+    console.log(email, password);
   
     try {
       const tokens = await loginUser(email, password);
@@ -120,7 +123,7 @@ loginForm.addEventListener('submit', async (event) => {
       alert('Login successful!');
   
       // Redirect or update UI
-      window.location.href = '/dashboard.html'; // Example redirect after login
+      window.location.href = '/pages/dashboard.html'; // Example redirect after login
     } catch (error) {
       alert('Login failed: ' + error.message);
     }
@@ -140,7 +143,7 @@ async function refreshToken() {
   
     if (!response.ok) {
       // If refresh token is also invalid, redirect to login
-      window.location.href = '/login.html';
+      window.location.href = '/pages/login.html';
       throw new Error('Failed to refresh token');
     }
   
