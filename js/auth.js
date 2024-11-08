@@ -172,3 +172,42 @@ async function fetchWithAuth(url, options = {}) {
 }
 
   
+// Logout function in JavaScript
+function logout() {
+  const refreshToken = localStorage.getItem("refresh_token");
+
+  if (refreshToken) {
+      fetch(`${apiUrl}logout/`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${refreshToken}`,  // Optional, can also pass in body
+          },
+          body: JSON.stringify({ refresh: refreshToken }),
+      })
+      .then(response => {
+          if (response.ok) {
+              // Clear tokens from localStorage
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+              alert("Successfully logged out.");
+          } else {
+              alert("Logout failed.");
+          }
+      })
+      .catch(error => console.error("Error:", error));
+  } else {
+      alert("No refresh token found.");
+  }
+}
+
+async function getUserProfile() {
+  try {
+      const userProfile = await fetchWithAuth(`${apiUrl}profile/`);
+      console.log('User Profile:', userProfile);
+      console.log(userProfile);
+      return userProfile;
+  } catch (error) {
+      console.error('Error fetching user profile:', error);
+  }
+}

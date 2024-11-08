@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../css/styles.css">
   <!-- Add custom fonts or icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
-  <script defer src="../js/dashboard.js"></script>
+  <script defer src="../js/auth.js"></script>
 </head>
 
 <body>
@@ -30,25 +30,79 @@
     <div class="dashboard-content">
         <!-- <span class="hamburger" id="toggle-btn">☰</span> -->
         <div class="dashboard-profile">
-            <h3>Hello Josh</h3>
+            <h3 id="user-name">Hello Josh</h3>  <!-- Initially displaying "Hello Josh" -->
             <div class="profile-right">
-                <img src="../images/notification-svgrepo-com.svg" alt="" width="30">
-                <img src="../images/profile-svgrepo-com.svg" alt="" width="30">
+                <img src="../images/notification-svgrepo-com.svg" alt="" width="20">
+                <img src="../images/profile-svgrepo-com.svg" alt="" width="20">
             </div>   
         </div>
         <!-- Your main content here -->
         <div class="dashboard-content-card">
-            <div></div>
-            <div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="dashboard-header">
+                <div>
+                    <h2><img class="tag" src="../images/tag1-white.svg" alt="" width="15">
+                    <h2>Special Offer</h2>
+                </div>
+                <p>Get 30% off the Turbo Plan</p>
+                <a href="#">Get Now</a>
             </div>
-            <div></div>
+            <div class="dashboard-second">
+                <div>
+                    <canvas id="myChart"></canvas>
+                    <h4>Total Steps (Last 30 Days)</h4>
+                    <!-- Insert steps graph here -->
+                      
+                      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                      
+                      <script>
+                        const ctx = document.getElementById('myChart');
+                      
+                        new Chart(ctx, {
+                          type: 'bar',
+                          data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                              label: 'Total Steps (Last 30 Days)',
+                              data: [12, 19, 3, 5, 2, 3],
+                              borderWidth: 1
+                            }]
+                          },
+                          options: {
+                            scales: {
+                              y: {
+                                beginAtZero: true
+                              }
+                            }
+                          }
+                        });
+                      </script>
+                      
+                </div>
+                <div>
+                    <h4>Total XP (Last 30 Days)</h4>
+                    <!-- Insert XP graph here -->
+                </div>
+            </div>
             <div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <p>Complete your Setup</p>
+            </div>
+            <div class="dashboard-quick-views">
+                <div class="dashboard-quick--one">
+                    <p class="profile-setup"><span>1</span> Complete your Profile Setup</p>
+                    <img src="../images/Profile data-cuate.svg" alt="complete profile icon" width="100">
+                </div>
+                <div class="dashboard-quick--two">
+                    <p class="profile-setup"><span>2</span> Add/Import Contacts</p>
+                    <img src="../images/New employee-amico.svg" alt="contacts icon" width="100">
+                </div>
+                <div class="dashboard-quick--three">
+                    <p class="profile-setup"><span>3</span> Connect Workspace</p>
+                    <!-- <video autoplay loop muted>
+                        <source src="../images/Software integration.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> -->
+                    <img src="../images/Software integration-bro.svg" alt="integration icon" width="100">
+                </div>
             </div>
         </div>
     </div>
