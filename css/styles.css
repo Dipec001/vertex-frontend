@@ -776,6 +776,7 @@ button {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .dashboard-content {
@@ -787,7 +788,8 @@ button {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  width: calc(95% - 250px);
+  width: calc(100% - 250px);
+  box-sizing: border-box;
   
 }
 .icon {
@@ -805,13 +807,17 @@ button {
 .icon::after {
   content: attr(data-label);
 }
+/* Apply the same behavior to the dashboard-hero */
+.dashboard-hero::after {
+  content: attr(data-label);
+}
 .dashboard-logo {
   border-radius: 10px;
   margin-right: 10px;
 }
 .dashboard-hero {
   display: flex;
-  margin: 50px 10px 40px;
+  margin: 50px auto;
   align-items: center;
 
 }
@@ -862,7 +868,7 @@ button {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
   padding: 20px;
   width: 50%;
-  height: 300px;
+  height: fit-content;
 }
 .dashboard-quick-views {
   display: flex;
@@ -932,14 +938,44 @@ button {
 }
 /* Media queries for responsiveness */
 @media (max-width: 1200px) {
-  .icon::after {
+  .icon::after, .dashboard-hero::after  {
       content: attr(data-label);
+  }
+}
+@media (min-width: 1200px) {
+  .dashboard-second div {
+    height: 300px;
+  }
+}
+@media (max-width: 1000px) {
+  .dashboard-second {
+    flex-direction: column;
+  }
+  .dashboard-second div {
+    width: 95%;
+    margin: auto;
   }
 }
 
 @media (max-width: 768px) {
-  .icon::after {
+  .icon::after, .dashboard-hero::after  {
       content: '';
+  }
+  .dashboard-sidebar {
+    width: 70px; /* Collapsed width */
+  }
+  .dashboard-content {
+    width: calc(100% - 70px); /* Full width minus sidebar */
+    margin-left: 70px;
+  }
+  .icon {
+    margin: 10px auto;
+  }
+
+}
+@media (max-width: 665px) {
+  .dashboard-quick-views {
+    flex-wrap: wrap;
   }
 }
 

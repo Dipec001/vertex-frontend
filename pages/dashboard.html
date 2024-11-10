@@ -15,11 +15,12 @@
 
 <body>
     <div class="dashboard-sidebar">
-        <div class="dashboard-hero">
+        <div class="dashboard-hero" data-label="Vertex">
             <img class="dashboard-logo" src="../images/vertex-logo.png" alt="Vertex Logo" width="30">
-            <h2>Vertex</h2>
+            <!-- <h2>Vertex</h2> -->
         </div>
         <div class="dashboard-line"></div>
+        <!-- <div class="icon" data-label="Vertex"><img src="../images/vertex-logo.png" alt="" width="30"></div> -->
         <div class="icon" data-label="Dashboard"><img src="../images/dashboard-layout-svgrepo-com.svg" alt="" width="30"></div>
         <div class="icon" data-label="Integrations"><img src="../images/setting-machine-equipment-wheel-cog-svgrepo-com.svg" alt="" width="30"></div>
         <div class="icon" data-label="Contacts"><img src="../images/contacts-alt-svgrepo-com.svg" alt="" width="30"></div>
@@ -32,8 +33,8 @@
         <div class="dashboard-profile">
             <h3 id="user-name">Hello Josh</h3>  <!-- Initially displaying "Hello Josh" -->
             <div class="profile-right">
-                <img src="../images/notification-svgrepo-com.svg" alt="" width="20">
-                <img src="../images/profile-svgrepo-com.svg" alt="" width="20">
+                <img src="../images/notification-svgrepo-com.svg" alt="" width="18">
+                <img src="../images/profile-circle-svgrepo-com.svg" alt="" width="20">
             </div>   
         </div>
         <!-- Your main content here -->
@@ -79,8 +80,34 @@
                       
                 </div>
                 <div>
-                    <h4>Total XP (Last 30 Days)</h4>
-                    <!-- Insert XP graph here -->
+                    <canvas id="myXpChart"></canvas>
+                    <h4>Total Xp (Last 30 Days)</h4>
+                    <!-- Insert steps graph here -->
+                      
+                      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                      
+                      <script>
+                        const nctx = document.getElementById('myXpChart');
+                      
+                        new Chart(nctx, {
+                          type: 'bar',
+                          data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                              label: 'Total Xp (Last 30 Days)',
+                              data: [12, 19, 3, 5, 2, 3],
+                              borderWidth: 1
+                            }]
+                          },
+                          options: {
+                            scales: {
+                              y: {
+                                beginAtZero: true
+                              }
+                            }
+                          }
+                        });
+                      </script>
                 </div>
             </div>
             <div>
