@@ -776,7 +776,9 @@ button {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  /* Apply border-radius only to the right side */
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .dashboard-content {
@@ -807,6 +809,20 @@ button {
 .icon::after {
   content: attr(data-label);
 }
+
+/* .icon.active {
+  background-color: white;
+  color: var(--color-tertiary);
+}
+
+.icon.active img {
+  filter: invert(0) sepia(0) saturate(0) hue-rotate(0deg) brightness(0) contrast(100%);
+}
+
+.icon.active::after {
+  color: var(--color-tertiary);
+} */
+
 /* Apply the same behavior to the dashboard-hero */
 .dashboard-hero::after {
   content: attr(data-label);

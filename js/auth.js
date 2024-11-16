@@ -27,62 +27,65 @@ document.addEventListener('DOMContentLoaded', function() {
 const signupForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
 
-// Add event listener for form submission
-signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
 
-    // Get the values from the form inputs
-    const email = document.getElementById('signup-email').value;
-    const companyName = document.getElementById('signup-company').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm-password').value;
-  
-    // Simple password validation
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-  
-    // Create the data object to send to the API
-    const signupData = {
-      email: email,
-      company_name: companyName,
-      password: password,
-    };
-    console.log(signupData);
-  
-    try {
-      // Send POST request to your API endpoint
-      const response = await fetch(`${apiUrl}signup-company-owner/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Send the request as JSON
-        },
-        body: JSON.stringify(signupData), // Convert the data object to JSON string
-      });
-  
-      const result = await response.json(); // Parse the JSON response from the server
-      console.log(result);
-  
-      if (response.ok) {
-        // If registration is successful
-        alert('Registration successful! Redirecting to login...');
-        // Optionally redirect the user to the login page or another page
-        window.location.href = '/pages/dashboard.html';
-      } else {
-        // If there was an error, handle and display the specific errors
-        let errorMessages = '';
-        for (const [field, messages] of Object.entries(result.errors)) {
-          errorMessages += `${field}: ${messages.join(', ')}\n`;
-        }
-        alert(`Error: \n${errorMessages}`);
+if (signupForm) {
+  // Add event listener for form submission
+  signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent default form submission behavior
+
+      // Get the values from the form inputs
+      const email = document.getElementById('signup-email').value;
+      const companyName = document.getElementById('signup-company').value;
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+    
+      // Simple password validation
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
       }
-    } catch (error) {
-      // If there was a network or server error
-      console.error('There was an error registering the user:', error);
-      alert('Something went wrong. Please try again.');
-    }
-  });
+    
+      // Create the data object to send to the API
+      const signupData = {
+        email: email,
+        company_name: companyName,
+        password: password,
+      };
+      console.log(signupData);
+    
+      try {
+        // Send POST request to your API endpoint
+        const response = await fetch(`${apiUrl}signup-company-owner/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Send the request as JSON
+          },
+          body: JSON.stringify(signupData), // Convert the data object to JSON string
+        });
+    
+        const result = await response.json(); // Parse the JSON response from the server
+        console.log(result);
+    
+        if (response.ok) {
+          // If registration is successful
+          alert('Registration successful! Redirecting to login...');
+          // Optionally redirect the user to the login page or another page
+          window.location.href = '/pages/dashboard.html';
+        } else {
+          // If there was an error, handle and display the specific errors
+          let errorMessages = '';
+          for (const [field, messages] of Object.entries(result.errors)) {
+            errorMessages += `${field}: ${messages.join(', ')}\n`;
+          }
+          alert(`Error: \n${errorMessages}`);
+        }
+      } catch (error) {
+        // If there was a network or server error
+        console.error('There was an error registering the user:', error);
+        alert('Something went wrong. Please try again.');
+      }
+    });
+}
 
 
 async function loginUser(username, password) {
@@ -103,32 +106,33 @@ async function loginUser(username, password) {
     return result; // This should return the tokens
 }
 function storeTokens(tokens) {
-    localStorage.setItem('accessToken', tokens.accessToken);
-    localStorage.setItem('refreshToken', tokens.refreshToken);
-    console.log(tokens.accessToken);
+  // Access the nested `data` field for access and refresh tokens
+  localStorage.setItem('accessToken', tokens.data.access);
+  localStorage.setItem('refreshToken', tokens.data.refresh);
 }
   
   
-
-loginForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-  
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    console.log(email, password);
-  
-    try {
-      const tokens = await loginUser(email, password);
-      storeTokens(tokens);
-      alert('Login successful!');
-  
-      // Redirect or update UI
-      window.location.href = '/pages/dashboard.html'; // Example redirect after login
-    } catch (error) {
-      alert('Login failed: ' + error.message);
-    }
-  });
-
+if (loginForm) {
+  loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+    
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      console.log(email, password);
+    
+      try {
+        const tokens = await loginUser(email, password);
+        console.log(tokens);
+        storeTokens(tokens);
+        // alert('Login successful!');
+    
+        // Redirect or update UI
+        window.location.href = '/pages/dashboard.html'; // Example redirect after login
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+      }
+    });
+}
 
 async function refreshToken() {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -154,7 +158,7 @@ async function refreshToken() {
   
 
 async function fetchWithAuth(url, options = {}) {
-    const accessToken = localStorage.getItem('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (!options.headers) {
         options.headers = {};
     }
@@ -174,22 +178,21 @@ async function fetchWithAuth(url, options = {}) {
   
 // Logout function in JavaScript
 function logout() {
-  const refreshToken = localStorage.getItem("refresh_token");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   if (refreshToken) {
       fetch(`${apiUrl}logout/`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${refreshToken}`,  // Optional, can also pass in body
           },
           body: JSON.stringify({ refresh: refreshToken }),
       })
       .then(response => {
           if (response.ok) {
               // Clear tokens from localStorage
-              localStorage.removeItem("access_token");
-              localStorage.removeItem("refresh_token");
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("refreshToken");
               alert("Successfully logged out.");
           } else {
               alert("Logout failed.");
@@ -201,13 +204,36 @@ function logout() {
   }
 }
 
-async function getUserProfile() {
-  try {
-      const userProfile = await fetchWithAuth(`${apiUrl}profile/`);
-      console.log('User Profile:', userProfile);
-      console.log(userProfile);
-      return userProfile;
-  } catch (error) {
-      console.error('Error fetching user profile:', error);
-  }
-}
+
+// async function getUserProfile() {
+//   try {
+//       const userProfileResponse = await fetchWithAuth(`${apiUrl}profile/`); // Await the fetch request
+//       const profileData = await userProfileResponse.json(); // Await parsing the JSON
+//       console.log(profileData);
+
+//       return profileData;
+//   } catch (error) {
+//       console.error('Error fetching user profile:', error);
+//   }
+// }
+
+// document.addEventListener('DOMContentLoaded', async () => {
+//   console.log('reached here');
+//   const accessToken = localStorage.getItem('accessToken');
+//   if (accessToken) {
+//     try {
+//       const userProfile = await getUserProfile();
+//       console.log(userProfile);
+//       const usernameElement = document.querySelector('#user-name');
+//       if (usernameElement) {
+//         usernameElement.textContent = `Hello ${userProfile.data.username}`;
+//       }
+//     } catch (error) {
+//       console.error('Error displaying user profile:', error);
+//     }
+//   } else {
+//     console.log("No access token found, not fetching profile.");
+//     // Optionally, redirect to login page
+//   }
+// });
+
