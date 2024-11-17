@@ -11,6 +11,7 @@
   <!-- Add custom fonts or icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
   <script defer src="../js/auth.js"></script>
+  <script defer src="../js/dashboard.js"></script>
 </head>
 
 <body>
@@ -19,26 +20,40 @@
             <img class="dashboard-logo" src="../images/vertex-logo.png" alt="Vertex Logo" width="30">
             <!-- <h2>Vertex</h2> -->
         </div>
-        <div class="dashboard-line"></div>
-        <!-- <div class="icon" data-label="Vertex"><img src="../images/vertex-logo.png" alt="" width="30"></div> -->
-        <div id="dashboard" class="icon" data-label="Dashboard"><img src="../images/dashboard-layout-svgrepo-com.svg" alt="" width="30"></div>
-        <div id="integrations" class="icon" data-label="Integrations"><img src="../images/setting-machine-equipment-wheel-cog-svgrepo-com.svg" alt="" width="30"></div>
-        <div id="contacts" class="icon" data-label="Contacts"><img src="../images/contacts-alt-svgrepo-com.svg" alt="" width="30"></div>
-        <div id="draws" class="icon" data-label="Draws"><img src="../images/champion-svgrepo-com.svg" alt="" width="30"></div>
-        <div id="settings" class="icon" data-label="Settings"><img src="../images/settings-svgrepo-com.svg" alt="" width="30"></div>
+        <div id="dashboard" class="icon" data-label="Dashboard" data-content="dashboard-content"><img src="../images/dashboard-layout-svgrepo-com.svg" alt=""></div>
+        <div id="integrations" class="icon" data-label="Integrations" data-content="integrations-content"><img src="../images/setting-machine-equipment-wheel-cog-svgrepo-com.svg" alt=""></div>
+        <div id="contacts" class="icon" data-label="Contacts" data-content="contacts-content"><img src="../images/contacts-alt-svgrepo-com.svg" alt=""></div>
+        <div id="draws" class="icon" data-label="Draws" data-content="draws-content"><img src="../images/champion-svgrepo-com.svg" alt=""></div>
+        <div id="settings" class="icon" data-label="Settings" data-content="settings-content"><img src="../images/settings-svgrepo-com.svg" alt=""></div>
         <!-- Add more icons as needed -->
     </div>
     <div class="dashboard-content">
         <!-- <span class="hamburger" id="toggle-btn">☰</span> -->
         <div class="dashboard-profile">
-            <h3 id="user-name">Hello Josh</h3>  <!-- Initially displaying "Hello Josh" -->
+            <ul class="profile-box" style="display: none;">
+              <li class="profile-box--profile">
+                <img src="../images/profile-circle-svgrepo-com.svg" alt="" width="40px">
+                <p id="username">Username</p>
+                <p id="email">hello@gmail.com</p>
+              </li>
+              <!-- <li class="profile-horizontal-line"></li> -->
+              <li class="profileoptions"><img src="../images/adjustments-profil-account-settings-preferences-svgrepo-com.svg" alt="" width="20"> Account Settings</li>
+              <li class="profileoptions"><img src="../images/arrow-narrow-left-svgrepo-com.svg" alt="" width="25"> Sign out</li>
+            </ul>
+            <ul class="profile-notification-box" style="display: none;">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <h3 id="user-name">Hello</h3>  <!-- Initially displaying "Hello Josh" -->
             <div class="profile-right">
                 <img src="../images/notification-svgrepo-com.svg" alt="" width="18">
-                <img src="../images/profile-circle-svgrepo-com.svg" alt="" width="20">
+                <img id="profile-icon"  src="../images/profile-circle-svgrepo-com.svg" alt="" width="20">
             </div>   
         </div>
         <!-- Your main content here -->
-        <div class="dashboard-content-card">
+        <div id="dashboard-content" class="dashboard-content-card">
             <div class="dashboard-header">
                 <div>
                     <h2><img class="tag" src="../images/tag1-white.svg" alt="" width="15">
@@ -132,6 +147,22 @@
                 </div>
             </div>
         </div>
+        <div id="integrations-content" class="dashboard-content-card" style="display: none;">
+          <h2>Integrations Content</h2>
+          <p>Manage your integrations here.</p>
+        </div>
+        <div id="contacts-content" class="dashboard-content-card" style="display: none;">
+            <h2>Contacts Content</h2>
+            <p>View and manage your contacts.</p>
+        </div>
+        <div id="draws-content" class="dashboard-content-card" style="display: none;">
+          <h2>Draws Content</h2>
+          <p>View and manage your draws.</p>
+        </div>
+        <div id="settings-content" class="dashboard-content-card" style="display: none;">
+          <h2>Settings Content</h2>
+          <p>View and manage everything Settings.</p>
+      </div>
     </div>
 </body>
 </html>

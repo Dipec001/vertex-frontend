@@ -1,60 +1,67 @@
 // // JavaScript file for handling dashboard logic (invite employees, view employees)
+'use strict';
 
-// const sidebar = document.querySelector('.sidebar');
-// const toggleBtn = document.getElementById('toggle-btn');
+document.addEventListener('DOMContentLoaded', function () {
+    const icons = document.querySelectorAll('.icon');
+    const contentCards = document.querySelectorAll('.dashboard-content-card');
 
-// toggleBtn.addEventListener('click', () => {
-//   sidebar.classList.toggle('active');
-// });
+    // Check if there's a saved active tab in localStorage
+    const savedContentId = localStorage.getItem('activeTab');
+    let activeTab = savedContentId ? document.querySelector(`[data-content="${savedContentId}"]`) : icons[0];
 
-const apiUrl = 'http://127.0.0.1:8000/api/';
+    // Set the active class on the saved or default tab
+    activeTab.classList.add("active");
 
-// Custom fetchWithAuth function
-async function fetchWithAuth(url, options = {}) {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        throw new Error('No access token found');
-    }
-
-    const headers = {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        ...options.headers, // Merge any additional headers passed to the function
-    };
-
-    const response = await fetch(url, { 
-        ...options, 
-        headers 
+    // Hide all content cards initially
+    contentCards.forEach(function (card) {
+        card.style.display = "none";
     });
 
-    if (!response.ok) {
-        throw new Error('Failed to fetch data');
-    }
+    // Show the content card associated with the active tab
+    const contentId = activeTab.dataset.content;
+    document.getElementById(contentId).style.display = "block";
 
-    return response.json();
-}
+    // Add click event listeners to all icons
+    icons.forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            // Remove the active class from all icons
+            icons.forEach(function (i) {
+                i.classList.remove("active");
+            });
+
+            // Add the active class to the clicked icon
+            this.classList.add("active");
+
+            // Hide all content cards
+            contentCards.forEach(function (card) {
+                card.style.display = "none";
+            });
+
+            // Show the content card associated with the clicked icon
+            const contentId = this.dataset.content;
+            document.getElementById(contentId).style.display = "block";
+
+            // Save the active tab to localStorage
+            localStorage.setItem('activeTab', contentId);
+        });
+    });
+});
 
 
-async function getUserProfile() {
-    try {
-        const userProfile = await fetchWithAuth(`${apiUrl}profile/`);
-        console.log('User Profile:', userProfile);
-        return userProfile;
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-}
+document.addEventListener('DOMContentLoaded', function () {
+    const profileIcon = document.getElementById('profile-icon');
+    const profileBox = document.querySelector('.profile-box');
 
-// Example function to display the user's name (or email) in the UI
-async function displayUserName() {
-    const userProfile = await getUserProfile();
-    console.log(userProfile);
-    if (userProfile) {
-        const name = userProfile.name || userProfile.email;  // Use name or email if name is not available
-        document.getElementById('user-name').textContent = `Hello, ${name}`;  // Assuming you have an element with id="user-name"
-    }
-}
+    // Toggle visibility of the profile box when profile icon is clicked
+    profileIcon.addEventListener('click', function (event) {
+        event.stopPropagation(); // Prevent the click event from propagating to the document
+        profileBox.style.display = profileBox.style.display === 'block' ? 'none' : 'block';
+    });
 
-// Call this function when the dashboard page loads
-displayUserName();
+    // Close the profile box if clicking outside
+    document.addEventListener('click', function (event) {
+        if (!profileBox.contains(event.target) && event.target !== profileIcon) {
+            profileBox.style.display = 'none';
+        }
+    });
+});

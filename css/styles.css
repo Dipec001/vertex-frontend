@@ -798,11 +798,13 @@ button {
   margin: 10px;
   display: flex;
   align-items: center;
+  padding: 7px;
+  cursor: pointer;
 }
 
 .icon img {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   margin-right: 10px;
 }
 
@@ -810,9 +812,10 @@ button {
   content: attr(data-label);
 }
 
-/* .icon.active {
+.icon.active {
   background-color: white;
   color: var(--color-tertiary);
+  border-radius: 10px;
 }
 
 .icon.active img {
@@ -821,7 +824,7 @@ button {
 
 .icon.active::after {
   color: var(--color-tertiary);
-} */
+}
 
 /* Apply the same behavior to the dashboard-hero */
 .dashboard-hero::after {
@@ -845,6 +848,43 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  position: relative;
+}
+.profile-box {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 250px;
+  background-color: white;
+  border-top: solid 1px var(--color-primary-darker);
+  border-left: solid 1px var(--color-primary-darker);
+  border-right: solid 1px var(--color-primary-darker);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 5px;
+  z-index: 1000;
+}
+.profile-box li {
+  border-bottom: 1px solid var(--color-primary-darker);
+  padding: 10px;
+}
+.profile-box li:hover {
+  background-color: #f6faf8;
+}
+.profile-box--profile {
+  text-align: center;
+  padding: 20px;
+  /* border-bottom: 1px solid var(--color-primary-darker); */
+}
+.profile-box--profile p {
+  padding-top: 7px;
+}
+.profileoptions {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.profileoptions img {
+  margin-right: 10px;
 }
 
 .profile-right {
@@ -853,6 +893,20 @@ button {
   align-items: center;
   flex-shrink: 0; /* Prevent shrinking to avoid getting cut off */
 }
+.profile-right img {
+  cursor: pointer;
+}
+.profile-notification-box {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  z-index: 1000;
+  background-color: #121212;
+  height: 200px;
+  width: 250px;
+  border-radius: 5px;
+}
+
 
 .dashboard-content-card {
   background-color: white; /* White background for a clean, elevated look */
@@ -860,6 +914,7 @@ button {
   padding: 50px 20px; /* Padding inside the card for spacing */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
   margin-bottom: 20px; /* Space between cards if stacked vertically */
+  min-height: 500px;
 }
 .dashboard-header {
   background-image: url(../images/black-blackground.jpg);
@@ -979,6 +1034,10 @@ button {
   }
   .dashboard-sidebar {
     width: 70px; /* Collapsed width */
+    padding: 0;
+  }
+  .dashboard-logo {
+    margin-right: 0;
   }
   .dashboard-content {
     width: calc(100% - 70px); /* Full width minus sidebar */
@@ -987,6 +1046,9 @@ button {
   .icon {
     margin: 10px auto;
   }
+  .icon img {
+    margin-right: 0;
+  }  
 
 }
 @media (max-width: 665px) {

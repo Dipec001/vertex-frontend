@@ -205,35 +205,43 @@ function logout() {
 }
 
 
-// async function getUserProfile() {
-//   try {
-//       const userProfileResponse = await fetchWithAuth(`${apiUrl}profile/`); // Await the fetch request
-//       const profileData = await userProfileResponse.json(); // Await parsing the JSON
-//       console.log(profileData);
+async function getUserProfile() {
+  try {
+      const userProfileResponse = await fetchWithAuth(`${apiUrl}profile/`); // Await the fetch request
+      const profileData = await userProfileResponse.json(); // Await parsing the JSON
+      console.log(profileData);
 
-//       return profileData;
-//   } catch (error) {
-//       console.error('Error fetching user profile:', error);
-//   }
-// }
+      return profileData;
+  } catch (error) {
+      console.error('Error fetching user profile:', error);
+  }
+}
 
-// document.addEventListener('DOMContentLoaded', async () => {
-//   console.log('reached here');
-//   const accessToken = localStorage.getItem('accessToken');
-//   if (accessToken) {
-//     try {
-//       const userProfile = await getUserProfile();
-//       console.log(userProfile);
-//       const usernameElement = document.querySelector('#user-name');
-//       if (usernameElement) {
-//         usernameElement.textContent = `Hello ${userProfile.data.username}`;
-//       }
-//     } catch (error) {
-//       console.error('Error displaying user profile:', error);
-//     }
-//   } else {
-//     console.log("No access token found, not fetching profile.");
-//     // Optionally, redirect to login page
-//   }
-// });
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('reached here');
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    try {
+      const userProfile = await getUserProfile();
+      console.log(userProfile);
+      const usernameElement = document.querySelector('#user-name');
+      const userElement = document.querySelector('#username')
+      const emailElement = document.querySelector('#email')
+      if (usernameElement) {
+        usernameElement.textContent = `Hello ${userProfile.data.username}`;
+      }
+      if (emailElement) {
+        emailElement.textContent = userProfile.data.email;
+      }
+      if (userElement) {
+        userElement.textContent = userProfile.data.company;
+      }
+    } catch (error) {
+      console.error('Error displaying user profile:', error);
+    }
+  } else {
+    console.log("No access token found, not fetching profile.");
+    // Optionally, redirect to login page
+  }
+});
 
