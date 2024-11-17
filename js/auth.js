@@ -228,8 +228,8 @@ async function getUserProfile() {
   }
 }
 
+// Displaying user profile details
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('reached here');
   const accessToken = localStorage.getItem('accessToken');
   if (accessToken) {
     try {
@@ -256,6 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+/// Logout Function
 document.addEventListener('DOMContentLoaded', function() {
   const signOutButton = document.getElementById('signout');
 
@@ -264,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Clear tokens from localStorage/sessionStorage
       localStorage.removeItem('accessToken'); // or sessionStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('activeTab');
       
       // Optionally clear other session data if needed
       // localStorage.removeItem('user_data');
