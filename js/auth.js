@@ -256,3 +256,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const signOutButton = document.getElementById('signout');
+
+  if (signOutButton) {
+    signOutButton.addEventListener('click', function() {
+      // Clear tokens from localStorage/sessionStorage
+      localStorage.removeItem('accessToken'); // or sessionStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      
+      // Optionally clear other session data if needed
+      // localStorage.removeItem('user_data');
+      
+      // Redirect to login or home page
+      window.location.href = 'login.html';  // Change to '/' if you want to redirect to the home page
+    });
+  }
+});
