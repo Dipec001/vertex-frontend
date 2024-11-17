@@ -792,6 +792,7 @@ button {
   flex-direction: column;
   width: calc(100% - 250px);
   box-sizing: border-box;
+  visibility: hidden;
   
 }
 .icon {

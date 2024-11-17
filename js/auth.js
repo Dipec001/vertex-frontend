@@ -1,7 +1,16 @@
 // JavaScript file for login, sign up, and authentication
 'use strict';
 
-const apiUrl = 'http://127.0.0.1:8000/api/';
+// const apiUrl = 'http://127.0.0.1:8000/api/';
+// Determine if we're in production or development
+const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8000/api/'  // Local API for development
+  : 'https://vertexx-85dc684c56f3.herokuapp.com/api/';  // Production API on Heroku
+
+console.log('API URL:', apiUrl);
+
+// Now you can use `apiUrl` for your API calls
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
@@ -9,17 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const switchToSignup = document.getElementById('switch-to-signup');
     const switchToLogin = document.getElementById('switch-to-login');
   
-    // Switch to signup form
-    switchToSignup.addEventListener('click', () => {
-      signupForm.classList.remove('hidden');
-      loginForm.classList.add('hidden');
-    });
+    if (switchToSignup && switchToLogin) {
+      // Switch to signup form
+      switchToSignup.addEventListener('click', () => {
+        signupForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      });
   
-    // Switch to login form
-    switchToLogin.addEventListener('click', () => {
-      signupForm.classList.add('hidden');
-      loginForm.classList.remove('hidden');
-    });
+      // Switch to login form
+      switchToLogin.addEventListener('click', () => {
+        signupForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+      });
+    };
 });
 
 

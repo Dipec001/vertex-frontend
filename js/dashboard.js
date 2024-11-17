@@ -4,6 +4,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const icons = document.querySelectorAll('.icon');
     const contentCards = document.querySelectorAll('.dashboard-content-card');
+    const dashboardContent = document.querySelector('.dashboard-content');
+
+    // Hide all content cards and make them visible only after processing
+    dashboardContent.style.visibility = "hidden";
 
     // Check if there's a saved active tab in localStorage
     const savedContentId = localStorage.getItem('activeTab');
@@ -16,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
     contentCards.forEach(function (card) {
         card.style.display = "none";
     });
+
+    // Make content visible after processing
+    dashboardContent.style.visibility = "visible";
 
     // Show the content card associated with the active tab
     const contentId = activeTab.dataset.content;
@@ -45,6 +52,22 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('activeTab', contentId);
         });
     });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const accountSettingsOption = document.querySelector('#account-settings'); // Target specific "Account Settings" option
+    const settingsIcon = document.querySelector('#settings'); // Settings tab icon in the sidebar
+
+    if (accountSettingsOption && settingsIcon) {
+        accountSettingsOption.addEventListener('click', function () {
+            // Simulate a click on the settings tab
+            settingsIcon.click();
+
+            // Optional: Save settings tab as active in localStorage for persistence
+            const contentId = settingsIcon.dataset.content;
+            localStorage.setItem('activeTab', contentId);
+        });
+    }
 });
 
 
